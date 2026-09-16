@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pefy.example/schemas/omega-promptforge-run-record.schema.json",
+  "title": "PEFY OmegaPromptForge Run Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "source_fingerprint",
+    "intent_classes",
+    "activated_domain_packs",
+    "capabilities_used",
+    "evidence_state",
+    "quality_gates",
+    "maturity",
+    "residual_gaps"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "source_fingerprint": {"type": "string", "minLength": 1},
+    "intent_classes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "MUST_PRESERVE",
+          "MUST_NOT_ALTER",
+          "MAY_ENRICH",
+          "MAY_OPTIMIZE",
+          "MUST_VERIFY",
+          "REQUIRES_AUTHORIZATION"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "activated_domain_packs": {"type": "array", "items": {"type": "string"}},
+    "capabilities_used": {"type": "array", "items": {"type": "string"}},
+    "evidence_state": {
+      "enum": ["VERIFIED", "OBSERVED", "REPORTED", "INFERRED", "ASSUMED", "PROPOSED", "TO_VERIFY"]
+    },
+    "quality_gates": {
+      "type": "object",
+      "additionalProperties": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "TO_VERIFY"]}
+    },
+    "maturity": {
+      "enum": [
+        "CONCEPT", "DESIGNED", "SPECIFIED", "IMPLEMENTED", "INSTALLED", "CONFIGURED",
+        "SMOKE_TESTED", "INTEGRATED", "LOCALLY_QUALIFIED", "PILOT_QUALIFIED",
+        "STAGING_QUALIFIED", "PRODUCTION_QUALIFIED", "LIVE", "MONITORED", "VALIDATED",
+        "SUPERSEDED", "RETIRED"
+      ]
+    },
+    "material_improvements": {"type": "array", "items": {"type": "string"}},
+    "regressions_checked": {"type": "array", "items": {"type": "string"}},
+    "authorization_boundaries": {"type": "array", "items": {"type": "string"}},
+    "residual_gaps": {"type": "array", "items": {"type": "string"}},
+    "next_action": {"type": ["string", "null"]}
+  }
+}
