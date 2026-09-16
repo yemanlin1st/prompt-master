@@ -5,11 +5,15 @@ on:
     paths:
       - 'PEFY/**'
       - 'scripts/validate_pefy_promptforge.py'
+      - 'scripts/omega_promptforge_compile.py'
+      - 'tests/test_omega_promptforge_compile.py'
       - '.github/workflows/pefy-promptforge-validate.yml'
   pull_request:
     paths:
       - 'PEFY/**'
       - 'scripts/validate_pefy_promptforge.py'
+      - 'scripts/omega_promptforge_compile.py'
+      - 'tests/test_omega_promptforge_compile.py'
       - '.github/workflows/pefy-promptforge-validate.yml'
 
 permissions:
@@ -26,5 +30,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate PEFY PromptForge
+      - name: Validate PEFY PromptForge governance
         run: python scripts/validate_pefy_promptforge.py
+      - name: Run PromptForge compiler unit tests
+        run: python -m unittest discover -s tests -p 'test_omega_promptforge_compile.py' -v
+      - name: Smoke-test geospatial compilation
+        run: >-
+          python scripts/omega_promptforge_compile.py
+          --prompt "Connect Google Maps and alternatives through a sovereign reusable account-wide geospatial capability."
+          --output /tmp/promptforge-geofabric.json
