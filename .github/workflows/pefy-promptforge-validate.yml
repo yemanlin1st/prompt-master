@@ -1,0 +1,30 @@
+name: PEFY PromptForge Validate
+
+on:
+  push:
+    paths:
+      - 'PEFY/**'
+      - 'scripts/validate_pefy_promptforge.py'
+      - '.github/workflows/pefy-promptforge-validate.yml'
+  pull_request:
+    paths:
+      - 'PEFY/**'
+      - 'scripts/validate_pefy_promptforge.py'
+      - '.github/workflows/pefy-promptforge-validate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate PEFY PromptForge
+        run: python scripts/validate_pefy_promptforge.py
