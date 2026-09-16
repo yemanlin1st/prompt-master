@@ -1,0 +1,54 @@
+{
+  "run_id": "geofabric-google-maps-example-v1",
+  "source_fingerprint": "sha256:example-source-fingerprint-placeholder",
+  "intent_classes": [
+    "MUST_PRESERVE",
+    "MAY_ENRICH",
+    "MAY_OPTIMIZE",
+    "MUST_VERIFY",
+    "REQUIRES_AUTHORIZATION"
+  ],
+  "activated_domain_packs": ["geofabric"],
+  "capabilities_used": [
+    "github",
+    "map_provider_discovery",
+    "provider_neutral_architecture",
+    "ci_validation"
+  ],
+  "evidence_state": "OBSERVED",
+  "quality_gates": {
+    "intent_fidelity": "PASS",
+    "correctness": "PASS",
+    "security": "PASS",
+    "privacy": "PASS",
+    "sovereignty": "PASS",
+    "accessibility_inclusion": "PASS",
+    "operationality": "TO_VERIFY",
+    "evidence": "PASS",
+    "rollback_reversibility": "PASS"
+  },
+  "maturity": "IMPLEMENTED",
+  "material_improvements": [
+    "converted one-off map connection request into a reusable provider-neutral geospatial domain pack",
+    "added explicit Google Maps authorization boundary instead of pretending private API connectivity",
+    "added open and self-hostable fallback classes",
+    "added CI-enforced governance invariants"
+  ],
+  "regressions_checked": [
+    "no deletion of upstream Prompt Master behavior",
+    "no hard dependency on one map provider",
+    "no production-qualified claim",
+    "no credential exposure"
+  ],
+  "authorization_boundaries": [
+    "private Google Maps Platform project credentials are not provisioned by this fixture",
+    "production deployment requires separate target-environment qualification"
+  ],
+  "residual_gaps": [
+    "implement concrete provider adapters",
+    "run geographic accuracy and latency benchmarks",
+    "qualify target-environment secrets and identity controls",
+    "perform controlled pilot before production promotion"
+  ],
+  "next_action": "continue adapter and benchmark implementation after governance overlay qualification"
+}
