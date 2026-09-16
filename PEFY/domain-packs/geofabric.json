@@ -1,0 +1,71 @@
+{
+  "name": "PEFY ΩGEOFABRIC",
+  "version": "1.0.0-draft",
+  "status": "specified",
+  "inherits": ["PEFY ΩPROMPTFORGE"],
+  "canonical_crs": "EPSG:4326",
+  "analytical_world_africa_crs": "EPSG:8857",
+  "capabilities": [
+    "interactive_maps",
+    "geocoding",
+    "reverse_geocoding",
+    "places_poi",
+    "routing",
+    "distance_matrix",
+    "route_optimization",
+    "map_matching",
+    "geofencing",
+    "tracking",
+    "offline_maps",
+    "spatial_analytics",
+    "field_operations"
+  ],
+  "provider_classes": {
+    "commercial_first_class": ["google_maps_platform", "mapbox", "here", "tomtom"],
+    "open_self_hostable": ["maplibre", "pelias", "valhalla", "graphhopper", "openrouteservice"],
+    "open_data_ecosystem": ["openstreetmap"]
+  },
+  "selection_dimensions": [
+    "intent",
+    "accuracy",
+    "coverage",
+    "country_region",
+    "privacy",
+    "sovereignty",
+    "network_state",
+    "latency",
+    "provider_health",
+    "quota",
+    "cost",
+    "offline_availability",
+    "licensing",
+    "accessibility",
+    "device_constraints",
+    "business_criticality"
+  ],
+  "mandatory_controls": [
+    "provider_abstraction",
+    "credential_isolation",
+    "location_data_minimization",
+    "tenant_isolation",
+    "license_attribution_tracking",
+    "observability",
+    "failover_policy",
+    "cost_telemetry",
+    "rollback",
+    "offline_low_bandwidth_strategy"
+  ],
+  "runtime_policy": {
+    "single_provider_lock_in": false,
+    "automatic_fallback_allowed": true,
+    "fallback_must_preserve_security_privacy_licensing": true,
+    "precise_location_default": "minimum_necessary_precision",
+    "public_community_endpoints": "not_assumed_production_capacity"
+  },
+  "maturity": {
+    "architecture": "specified",
+    "provider_adapters": "to_implement",
+    "qualification_suite": "to_implement",
+    "production": "not_qualified"
+  }
+}
