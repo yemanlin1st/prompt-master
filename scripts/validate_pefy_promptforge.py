@@ -9,6 +9,7 @@ REGISTRY = PEFY / "promptforge.registry.json"
 GEOFABRIC = PEFY / "domain-packs" / "geofabric.json"
 DOMAIN_TEMPLATE = PEFY / "domain-packs" / "_template.json"
 RUN_SCHEMA = PEFY / "run-record.schema.json"
+SAMPLE_RUN = PEFY / "tests" / "sample_geofabric_run.json"
 
 REQUIRED_PIPELINE = [
     "PRESERVE", "RETRIEVE", "UNDERSTAND", "CLASSIFY", "REUSE", "ENRICH",
@@ -75,12 +76,37 @@ def validate_run_schema(data):
     assert "REQUIRES_AUTHORIZATION" in props["intent_classes"]["items"]["enum"]
 
 
+def validate_sample_run(sample, schema, registry):
+    missing = REQUIRED_RUN_FIELDS - set(sample)
+    assert not missing, f"sample run missing fields: {sorted(missing)}"
+    allowed_intents = set(schema["properties"]["intent_classes"]["items"]["enum"])
+    assert set(sample["intent_classes"]) <= allowed_intents, "sample has unknown intent class"
+    allowed_evidence = set(schema["properties"]["evidence_state"]["enum"])
+    assert sample["evidence_state"] in allowed_evidence, "sample has invalid evidence state"
+    allowed_maturity = set(schema["properties"]["maturity"]["enum"])
+    assert sample["maturity"] in allowed_maturity, "sample has invalid maturity"
+    assert "geofabric" in sample["activated_domain_packs"]
+    assert "geofabric" in registry["domain_packs"]
+    sample_gates = set(sample["quality_gates"])
+    missing_gates = REQUIRED_GATES - sample_gates
+    assert not missing_gates, f"sample run missing quality gates: {sorted(missing_gates)}"
+    assert sample["quality_gates"]["operationality"] != "PASS", (
+        "sample must not claim full operationality before concrete provider adapters are qualified"
+    )
+    assert sample["maturity"] not in {"PRODUCTION_QUALIFIED", "LIVE"}, (
+        "sample may not claim production/live maturity"
+    )
+
+
 def main():
     try:
-        validate_registry(load(REGISTRY))
+        registry = load(REGISTRY)
+        schema = load(RUN_SCHEMA)
+        validate_registry(registry)
         validate_geofabric(load(GEOFABRIC))
         validate_domain_template(load(DOMAIN_TEMPLATE))
-        validate_run_schema(load(RUN_SCHEMA))
+        validate_run_schema(schema)
+        validate_sample_run(load(SAMPLE_RUN), schema, registry)
     except (AssertionError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(f"PEFY PromptForge validation FAILED: {exc}", file=sys.stderr)
         return 1
