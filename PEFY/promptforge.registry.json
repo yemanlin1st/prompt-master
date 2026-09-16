@@ -1,0 +1,98 @@
+{
+  "name": "PEFY OmegaPromptForge",
+  "version": "1.0.0-draft",
+  "status": "implemented-not-production-qualified",
+  "governing_owner": "MƐTAPEFYON Ω / Ω Mission Control",
+  "principles": {
+    "source_preservation": true,
+    "reuse_before_create": true,
+    "bounded_recursion": true,
+    "monotonic_improvement": true,
+    "fail_closed_on_missing_mandatory_controls": true,
+    "human_in_command": true,
+    "provider_neutrality": true,
+    "no_architecture_sprawl": true
+  },
+  "intent_classes": [
+    "MUST_PRESERVE",
+    "MUST_NOT_ALTER",
+    "MAY_ENRICH",
+    "MAY_OPTIMIZE",
+    "MUST_VERIFY",
+    "REQUIRES_AUTHORIZATION"
+  ],
+  "pipeline": [
+    "PRESERVE",
+    "RETRIEVE",
+    "UNDERSTAND",
+    "CLASSIFY",
+    "REUSE",
+    "ENRICH",
+    "DECOMPOSE",
+    "ROUTE",
+    "RESEARCH",
+    "EXECUTE",
+    "VERIFY",
+    "CHALLENGE",
+    "CORRECT",
+    "RETEST",
+    "QUALIFY",
+    "DELIVER",
+    "OBSERVE",
+    "LEARN",
+    "CAPITALIZE"
+  ],
+  "reality_states": [
+    "VERIFIED",
+    "OBSERVED",
+    "REPORTED",
+    "INFERRED",
+    "ASSUMED",
+    "PROPOSED",
+    "TO_VERIFY"
+  ],
+  "lifecycle_states": [
+    "CONCEPT",
+    "DESIGNED",
+    "SPECIFIED",
+    "IMPLEMENTED",
+    "INSTALLED",
+    "CONFIGURED",
+    "SMOKE_TESTED",
+    "INTEGRATED",
+    "LOCALLY_QUALIFIED",
+    "PILOT_QUALIFIED",
+    "STAGING_QUALIFIED",
+    "PRODUCTION_QUALIFIED",
+    "LIVE",
+    "MONITORED",
+    "VALIDATED",
+    "SUPERSEDED",
+    "RETIRED"
+  ],
+  "quality_gates": [
+    "intent_fidelity",
+    "correctness",
+    "completeness",
+    "architecture_alignment",
+    "security",
+    "privacy",
+    "sovereignty",
+    "licensing",
+    "accessibility_inclusion",
+    "maintainability",
+    "operationality",
+    "evidence",
+    "rollback_reversibility",
+    "reusability"
+  ],
+  "promotion_policy": {
+    "critical_gate_failure": "FAIL_FIX_RETEST_QUALIFY",
+    "require_material_improvement": true,
+    "forbid_unacceptable_regression": true,
+    "allowed_candidate_states_when_unproven": ["ASSESS", "TRIAL", "HOLD"]
+  },
+  "domain_packs": [
+    "geofabric"
+  ]
+}
