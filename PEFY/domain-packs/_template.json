@@ -1,0 +1,28 @@
+{
+  "name": "PEFY DOMAIN PACK TEMPLATE",
+  "version": "0.1.0-template",
+  "status": "template",
+  "inherits": ["PEFY ΩPROMPTFORGE"],
+  "activation": {
+    "keywords": [],
+    "project_signals": [],
+    "risk_signals": []
+  },
+  "objectives": [],
+  "capabilities": [],
+  "mandatory_controls": [],
+  "optional_controls": [],
+  "evidence_requirements": [],
+  "quality_gates": [],
+  "provider_policy": {
+    "primary": null,
+    "fallbacks": [],
+    "provider_neutral": true
+  },
+  "stop_conditions": [],
+  "maturity": {
+    "architecture": "concept",
+    "implementation": "not_started",
+    "production": "not_qualified"
+  }
+}
