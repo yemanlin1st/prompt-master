@@ -4,8 +4,11 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-REGISTRY = ROOT / "PEFY" / "promptforge.registry.json"
-GEOFABRIC = ROOT / "PEFY" / "domain-packs" / "geofabric.json"
+PEFY = ROOT / "PEFY"
+REGISTRY = PEFY / "promptforge.registry.json"
+GEOFABRIC = PEFY / "domain-packs" / "geofabric.json"
+DOMAIN_TEMPLATE = PEFY / "domain-packs" / "_template.json"
+RUN_SCHEMA = PEFY / "run-record.schema.json"
 
 REQUIRED_PIPELINE = [
     "PRESERVE", "RETRIEVE", "UNDERSTAND", "CLASSIFY", "REUSE", "ENRICH",
@@ -16,6 +19,11 @@ REQUIRED_PIPELINE = [
 REQUIRED_GATES = {
     "intent_fidelity", "correctness", "security", "privacy", "sovereignty",
     "accessibility_inclusion", "operationality", "evidence", "rollback_reversibility"
+}
+
+REQUIRED_RUN_FIELDS = {
+    "run_id", "source_fingerprint", "intent_classes", "activated_domain_packs",
+    "capabilities_used", "evidence_state", "quality_gates", "maturity", "residual_gaps"
 }
 
 
@@ -30,6 +38,7 @@ def validate_registry(data):
     assert data["principles"]["source_preservation"] is True
     assert data["principles"]["bounded_recursion"] is True
     assert data["principles"]["human_in_command"] is True
+    assert data["principles"]["no_architecture_sprawl"] is True
     assert data["pipeline"] == REQUIRED_PIPELINE, "pipeline order drift detected"
     missing = REQUIRED_GATES - set(data["quality_gates"])
     assert not missing, f"missing quality gates: {sorted(missing)}"
@@ -42,14 +51,37 @@ def validate_geofabric(data):
     assert data["analytical_world_africa_crs"] == "EPSG:8857"
     assert data["runtime_policy"]["single_provider_lock_in"] is False
     assert data["runtime_policy"]["fallback_must_preserve_security_privacy_licensing"] is True
+    assert data["runtime_policy"]["precise_location_default"] == "minimum_necessary_precision"
     assert data["maturity"]["production"] == "not_qualified"
+
+
+def validate_domain_template(data):
+    assert data["inherits"] == ["PEFY ΩPROMPTFORGE"]
+    assert data["provider_policy"]["provider_neutral"] is True
+    assert data["maturity"]["production"] == "not_qualified"
+
+
+def validate_run_schema(data):
+    assert data["type"] == "object"
+    assert data["additionalProperties"] is False
+    required = set(data["required"])
+    missing = REQUIRED_RUN_FIELDS - required
+    assert not missing, f"run schema missing required fields: {sorted(missing)}"
+    props = data["properties"]
+    assert set(props["evidence_state"]["enum"]) >= {
+        "VERIFIED", "OBSERVED", "REPORTED", "INFERRED", "ASSUMED", "PROPOSED", "TO_VERIFY"
+    }
+    assert "PRODUCTION_QUALIFIED" in props["maturity"]["enum"]
+    assert "REQUIRES_AUTHORIZATION" in props["intent_classes"]["items"]["enum"]
 
 
 def main():
     try:
         validate_registry(load(REGISTRY))
         validate_geofabric(load(GEOFABRIC))
-    except (AssertionError, KeyError, json.JSONDecodeError) as exc:
+        validate_domain_template(load(DOMAIN_TEMPLATE))
+        validate_run_schema(load(RUN_SCHEMA))
+    except (AssertionError, KeyError, TypeError, json.JSONDecodeError) as exc:
         print(f"PEFY PromptForge validation FAILED: {exc}", file=sys.stderr)
         return 1
     print("PEFY PromptForge validation PASSED")
