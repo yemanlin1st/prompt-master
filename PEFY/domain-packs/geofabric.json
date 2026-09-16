@@ -3,6 +3,51 @@
   "version": "1.0.0-draft",
   "status": "specified",
   "inherits": ["PEFY ΩPROMPTFORGE"],
+  "activation": {
+    "keywords": [
+      "map",
+      "maps",
+      "google maps",
+      "google map",
+      "geolocation",
+      "geocoding",
+      "reverse geocoding",
+      "routing",
+      "route",
+      "navigation",
+      "gps",
+      "gis",
+      "geospatial",
+      "location",
+      "locations",
+      "places",
+      "poi",
+      "geofence",
+      "geofencing",
+      "openstreetmap",
+      "maplibre",
+      "mapbox",
+      "here maps",
+      "tomtom",
+      "pelias",
+      "valhalla"
+    ],
+    "project_signals": [
+      "mobility",
+      "field operations",
+      "logistics",
+      "asset tracking",
+      "telecom sites",
+      "territorial dashboard",
+      "agriculture mapping"
+    ],
+    "risk_signals": [
+      "precise location",
+      "continuous tracking",
+      "live location",
+      "personal location data"
+    ]
+  },
   "canonical_crs": "EPSG:4326",
   "analytical_world_africa_crs": "EPSG:8857",
   "capabilities": [
